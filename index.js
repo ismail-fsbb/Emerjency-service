@@ -25,7 +25,7 @@ for (const callBtn of callBtns) {
         const serviceTitle = serviceCard.querySelector('.service-title').textContent;
         const emerjencyNumber = serviceCard.querySelector('.emerjency-number').textContent;
 
-        if (confirm(`📞 Calling ${serviceTitle} ${emerjencyNumber}?`)) {
+        if (confirm(`📞 Calling ${serviceTitle} ${emerjencyNumber}`)) {
             const historyContainer = document.querySelector('.history-card-wrapper');
             const newHistoryCard = document.createElement('div');
 
@@ -48,6 +48,36 @@ for (const callBtn of callBtns) {
     });
 }
 
+// Clear history button functionality
+const clearBtn = document.getElementById('clear-history');
+const historyWrapper = document.querySelector('.history-card-wrapper');
+clearBtn.addEventListener('click', function() {
+    const cards = historyWrapper.getElementsByClassName('history-card');
+
+    if (cards.length === 0) {
+        alert("No item to delete");
+        return;
+    }
+
+    while (cards.length > 0) {
+        cards[0].remove();
+    }
+});
 
 
-
+// copy btn click functionality
+let copyCount = 0;
+const copyBtns = document.getElementsByClassName('copy-btn');
+for (const copyBtn of copyBtns){
+    copyBtn.addEventListener('click', function(){
+        const serviceCard = copyBtn.closest('.service_card');
+        const emerjencyNumber = serviceCard.querySelector('.emerjency-number').textContent;
+        // Clipboard e copy
+        navigator.clipboard.writeText(emerjencyNumber).
+        then(function() { 
+            alert(`Copied Number ${emerjencyNumber}`);
+            copyCount++;
+            document.getElementById('copy-count').textContent = copyCount;
+        })
+    })
+}
